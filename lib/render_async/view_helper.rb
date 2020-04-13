@@ -55,7 +55,8 @@ module RenderAsync
 
     def polling_options(options)
       { interval: options[:interval],
-        toggle: options[:toggle] }
+        toggle: options[:toggle],
+        refresh: options[:refresh] }
     end
 
     private
