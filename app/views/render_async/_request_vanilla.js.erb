@@ -1,9 +1,9 @@
 (function () {
-  <% if turbolinks %>
-  if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
-    return;
+  if (window.Turbolinks) {
+    if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
+      return;
+    }
   }
-  <% end %>
 
   function createEvent(name, container) {
     var event = undefined;
@@ -18,14 +18,14 @@
   }
 
   function _runAfterDocumentLoaded(callback) {
-    <% if turbolinks %>
-    document.addEventListener("turbolinks:load", function (e) {
-      e.target.removeEventListener(e.type, arguments.callee);
-      callback();
-    });
-    <% else %>
-    document.addEventListener("DOMContentLoaded", callback);
-    <% end %>
+    if (window.Turbolinks) {
+      document.addEventListener("turbolinks:load", function (e) {
+        e.target.removeEventListener(e.type, arguments.callee);
+        callback();
+      });
+    } else {
+      document.addEventListener("DOMContentLoaded", callback);
+    }
   }
 
   function _makeRequest(currentRetryCount) {
@@ -162,7 +162,7 @@
     }
   }
 
-  _runAfterDocumentLoaded(function() {
+  _runAfterDocumentLoaded(function () {
     _setUpRefresh()
     _renderAsyncFunction();
   });
