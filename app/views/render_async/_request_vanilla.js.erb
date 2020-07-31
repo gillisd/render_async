@@ -23,6 +23,10 @@
         e.target.removeEventListener(e.type, arguments.callee);
         callback();
       });
+
+      document.addEventListener("renderAsync", function (e) {
+        callback();
+      });
     } else {
       document.addEventListener("DOMContentLoaded", callback);
     }
